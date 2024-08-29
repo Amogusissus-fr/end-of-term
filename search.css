@@ -15,10 +15,25 @@
 }
 
 .search {
+    /* border: 2px solid red; */
     width: 100%;
     height: 200px;
     color: white;
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+}
+
+.search h3 {
+    margin-bottom: 50px
+}
+
+.search input {
+    font-size: 20px; 
+    padding: 10px; 
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    scale: 2;
 }
