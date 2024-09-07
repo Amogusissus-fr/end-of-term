@@ -94,17 +94,112 @@ p {
 
 .preview {
   width: 80%;
-  height: 705px;
+  height: 400px;
   border: 2px solid red;
   display: flex;
   position: absolute;
-margin-left: 25vh;
+  margin-left: 25vh;
 }
 
 .preview1 {
-  width: 50%x;
-  height: 705px;
+  width: 50%;
+  height: 397px;
   background-image: url('z5804889305334_e93722c0c24f1df48681355d544c9a39.jpg');
   background-size: cover;
   background-position: center;
+  font-weight: bold;
+}
+
+.preview1 b {
+  background: none;
+  font-size: larger;
+  color: #656565;
+  position: absolute;
+  bottom: 0px;
+}
+
+.preview1 a {
+  background: none;
+  text-decoration: none;
+  color: white;
+  position: absolute;
+  bottom: 40px;
+  left: 10px;
+  right: 10px;
+  font-size: xx-large;
+  word-wrap: break-word; /* Cho phép bẻ từ dài xuống dòng */
+  max-width: 300px; /* Đảm bảo không vượt quá chiều rộng phần tử cha */
+}
+
+.preview1 a:hover {
+  text-decoration: underline ;
+}
+
+.preview2 {
+  width: 50%;
+  height: 50%;
+  background-image: url('z5807849823095_94c452cabc2c463cf6343ec9fc46638e.jpg');
+  background-size: cover;
+  background-position: center;
+  font-weight: bold;
+}
+
+.preview2 b {
+  background: none;
+  font-size: large;
+  color: #656565;
+  position: absolute;
+  top: 180px;
+}
+
+.preview2 a {
+  background: none;
+  text-decoration: none;
+  color: white;
+  position: absolute;
+  top: 120px;
+  right: 310px;
+  font-size: x-large;
+  word-wrap: break-word; /* Cho phép bẻ từ dài xuống dòng */
+  max-width: 300px; /* Đảm bảo không vượt quá chiều rộng phần tử cha */
+}
+
+.preview2 a:hover {
+  text-decoration: underline ;
+}
+
+.preview3 {
+  width: 50%;
+  height: 50%;
+  background-image: url('z5807850606940_68df247dd4bced4531d6a47b6c24ed78.jpg');
+  background-size: cover;
+  background-position: center;
+  font-weight: bold;
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+}
+
+.preview3 b {
+  background: none;
+  font-size: large;
+  color: #656565;
+  position: absolute;
+  top: 180px;
+}
+
+.preview3 a {
+  background: none;
+  text-decoration: none;
+  color: white;
+  position: absolute;
+  top: 120px;
+  right: 310px;
+  font-size: x-large;
+  word-wrap: break-word; /* Cho phép bẻ từ dài xuống dòng */
+  max-width: 300px; /* Đảm bảo không vượt quá chiều rộng phần tử cha */
+}
+
+.preview3 a:hover {
+  text-decoration: underline ;
 }
