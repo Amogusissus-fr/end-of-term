@@ -215,19 +215,66 @@ p {
   background-color: white;
 }
 
-.featured1 {
+.featured2 {
+  margin-top: 20px;
+}
+
+.featured1, .featured2 {
   display: flex; 
   justify-content: space-between; 
-
   min-height: 200px; 
 }
 
-.post1, .post2, .post3, .post4 {
+.post1, .post2, .post3, .post4, .post5, .post6, .post7, .post8 {
   width: 24.5%; 
   min-height: 100px;
-  border: 2px solid red; 
+  border: 2px gray;
+  border-style: inset;
 }
 
-.post1 img, .post2 img, .post3 img, .post4 img {
+.post1 img, .post2 img, .post3 img, .post4 img, .post5 img, .post6 img, .post7 img, .post8 img {
   width: 100%;
+}
+
+.footer * {
+  background-color: #080710;
+}
+
+.footer {
+  height: 50vh;
+  width: 100%;
+  display: flex;
+}
+
+.links {  width: 50%;
+  height: 100%;
+  /* border: 2px solid red; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.quicklinks, .archives, .social {
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+}
+
+.quicklinks p, .archives p, .social p {
+  margin-top: 20px;
+}
+
+.newsletter {
+  width: 50%;
+  height: 100%;
+  /* border: 2px solid red; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.newsletter p {
+  max-width: 50%;
 }
