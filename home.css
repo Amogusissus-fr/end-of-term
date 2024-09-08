@@ -1,17 +1,17 @@
 * {
   margin: 0px;
   box-sizing: border-box;
-  background-color: #000000;
+  background-color: #080710;
 }
 
 body {
-  padding-top: 60px; /* Đảm bảo phần menu không chồng lên nội dung */
+  padding-top: 60px;
 }
 
 .logo_container {
   width: 100vw;
   min-height: 20px;
-  background-color: #000000;
+  background-color: #080710;
   display: flex;
   justify-content: space-evenly;
   color: white;
@@ -32,7 +32,7 @@ main {
   position: fixed;
   top: 0;
   width: 100%;
-  background-color: #000000;
+  background-color: #080710;
   z-index: 999;
 }
 
@@ -83,19 +83,18 @@ p {
   text-decoration: none;
 }
 
-/* Sử dụng flexbox để căn giữa preview */
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh; /* Chiều cao tối thiểu là toàn màn hình để căn giữa */
+  min-height: 100vh;
 }
 
 .preview {
   width: 80%;
-  height: 400px;
-  border: 2px solid red;
+  height: 600px;
+  /* border: 2px solid red; */
   display: flex;
   position: absolute;
   margin-left: 25vh;
@@ -103,7 +102,7 @@ p {
 
 .preview1 {
   width: 50%;
-  height: 397px;
+  height: 100%;
   background-image: url('z5804889305334_e93722c0c24f1df48681355d544c9a39.jpg');
   background-size: cover;
   background-position: center;
@@ -127,8 +126,7 @@ p {
   left: 10px;
   right: 10px;
   font-size: xx-large;
-  word-wrap: break-word; /* Cho phép bẻ từ dài xuống dòng */
-  max-width: 300px; /* Đảm bảo không vượt quá chiều rộng phần tử cha */
+  max-width: 300px;
 }
 
 .preview1 a:hover {
@@ -147,9 +145,9 @@ p {
 .preview2 b {
   background: none;
   font-size: large;
-  color: #656565;
+  color: #3a3a3a;
   position: absolute;
-  top: 180px;
+  top: 280px;
 }
 
 .preview2 a {
@@ -157,11 +155,11 @@ p {
   text-decoration: none;
   color: white;
   position: absolute;
-  top: 120px;
-  right: 310px;
+  top: 220px;
+  right: 300px;
   font-size: x-large;
-  word-wrap: break-word; /* Cho phép bẻ từ dài xuống dòng */
-  max-width: 300px; /* Đảm bảo không vượt quá chiều rộng phần tử cha */
+
+  max-width: 300px; 
 }
 
 .preview2 a:hover {
@@ -185,7 +183,7 @@ p {
   font-size: large;
   color: #656565;
   position: absolute;
-  top: 180px;
+  top: 280px;
 }
 
 .preview3 a {
@@ -193,13 +191,43 @@ p {
   text-decoration: none;
   color: white;
   position: absolute;
-  top: 120px;
-  right: 310px;
+  top: 220px;
+  right: 300px;
   font-size: x-large;
-  word-wrap: break-word; /* Cho phép bẻ từ dài xuống dòng */
-  max-width: 300px; /* Đảm bảo không vượt quá chiều rộng phần tử cha */
+  max-width: 300px;
 }
 
 .preview3 a:hover {
   text-decoration: underline ;
+}
+
+.featured {
+  width: 100%;
+  background-color: white;
+  margin-top: 600px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.featured * {
+  background-color: white;
+}
+
+.featured1 {
+  display: flex; 
+  justify-content: space-between; 
+
+  min-height: 200px; 
+}
+
+.post1, .post2, .post3, .post4 {
+  width: 24.5%; 
+  min-height: 100px;
+  border: 2px solid red; 
+}
+
+.post1 img, .post2 img, .post3 img, .post4 img {
+  width: 100%;
 }
