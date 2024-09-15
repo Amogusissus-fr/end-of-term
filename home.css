@@ -225,15 +225,28 @@ p {
   min-height: 200px; 
 }
 
+
+
 .post1, .post2, .post3, .post4, .post5, .post6, .post7, .post8 {
   width: 24.5%; 
   min-height: 100px;
-  border: 2px gray;
-  border-style: inset;
+  padding: 10px;
+  background-color: white;
 }
 
 .post1 img, .post2 img, .post3 img, .post4 img, .post5 img, .post6 img, .post7 img, .post8 img {
   width: 100%;
+  height: 300px;
+}
+
+.post1 h2, .post2 h2, .post3 h2, .post4 h2,.post5 h2, .post6 h2, .post7 h2, .post8 h2 {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.post1 p, .post2 p, .post3 p, .post4 p,.post5 p, .post6 p, .post7 p, .post8 p {
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .footer * {
