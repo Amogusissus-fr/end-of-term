@@ -35,6 +35,11 @@
     background-color: #080710;
     z-index: 999;
   }
+
+  .navbar a:hover {
+    transition: color 0.5s ease-in-out;
+    color: white;
+  }
   
   .navbar ul {
     padding: 0px;
@@ -47,10 +52,6 @@
     padding: 15px;
     display: block;
     text-align: center;
-  }
-  
-  .navbar a:hover {
-    color: white;
   }
   
   .navbar li {
@@ -119,16 +120,16 @@ b , p, h1, h2, h3, h4 {
     flex-wrap: wrap;
     justify-content: space-between;
     width: 70%;
-    margin: 0 auto; /* Để căn giữa phần intro */
+    margin: 0 auto;
     padding: 20px;
 }
 
 .info1, .info2 {
-    width: 48%; /* Mỗi phần tử chiếm 48% chiều rộng để có 2 cột */
+    width: 48%; 
     min-height: 200px;
-    margin-bottom: 20px; /* Khoảng cách giữa các hàng */
+    margin-bottom: 20px; 
     padding: 20px;
-    /* border: 2px solid #000; Thêm viền để kiểm tra */
+    /* border: 2px solid #000;*/
 }
 
 /* Điều chỉnh tiêu đề và văn bản */
@@ -189,4 +190,30 @@ b , p, h1, h2, h3, h4 {
   
   .newsletter p {
     max-width: 50%;
+  }
+
+
+  form {
+    display: flex;
+    flex-direction: column;
+    font-size: xx-large;
+  }
+
+  input {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    font-size: xx-large;
+  }
+
+  .submit {
+    background-color: black;
+    color: white;
+    font-size: 30px;
+    margin-bottom: 20px;
+  }
+
+  .submit:hover {
+    transition: background-color 0.5s ease-in-out;
+    background-color: blue;
   }
