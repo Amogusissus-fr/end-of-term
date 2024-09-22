@@ -14,6 +14,16 @@
     margin-top: 100px;
 }
 
+.return i:hover {
+    transition: font-size 1s;
+    font-size: 70px;
+}
+
+.return i:not(:hover) {
+    transition: font-size 1s;
+    font-size: 40px;
+}
+
 .search {
     /* border: 2px solid red; */
     width: 100%;
@@ -47,4 +57,18 @@ button{
     font-size: 18px;
     font-weight: 600;
     border-radius: 5px;
+}
+
+button:hover {
+    transition: background-color 1s;
+    background-color: blue;
+}
+
+button:not(:hover) {
+    transition: background-color 1s;
+    background-color: white;
+}
+
+form {
+    margin-top: 100px;
 }

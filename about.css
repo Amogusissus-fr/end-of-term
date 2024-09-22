@@ -15,7 +15,7 @@
     display: flex;
     justify-content: space-evenly;
     color: white;
-    margin-top: 50px;
+    margin-top: 60px;
   }
   
   .items {
@@ -50,23 +50,59 @@
   }
   
   .navbar a:hover {
+    transition: color 0.5s ease-in-out;
     color: white;
   }
+  
+  .navbar a:not(:hover) {
+    transition: color 0.5s ease-in-out;
+    color: #656565;
+  }
+  
   
   .navbar li {
     float: left;
   }
   
+  .search_icon:hover {
+    transition: font-size 1s ease-in-out;
+    font-size: x-large;
+  }
+  
+  .search_icon:not(:hover) {
+    transition: font-size 1s ease-in-out;
+    font-size: large;
+  }
+  
+  .search_icon {
+    display: flex;
+  }
+  
   .search_icon i {
+    color: white;
+    margin-left: 10px;
+  }
+  
+  .search_icon a {
+    text-decoration: none;
     color: white;
   }
   
   .logo i {
     color: white;
-    margin-left: 10px;
+    margin-left: 20px;
     font-size: larger;
   }
   
+  .logo i:hover {
+    transition: font-size 1s;
+    font-size: xx-large;
+  }
+  
+  .logo i:not(:hover) {
+    transition: font-size 1s ease-in-out;
+    font-size: large;
+  }
 
   
   h3 {
