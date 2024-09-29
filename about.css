@@ -4,7 +4,11 @@
     background-color: #080710;
   }
   
-
+  .items h1 {
+    margin-left: 350px;
+    margin-right: 350px;
+  }
+  
 
 
   
@@ -34,6 +38,7 @@
     width: 100%;
     background-color: #080710;
     z-index: 999;
+    position: fixed;
   }
   
   .navbar ul {

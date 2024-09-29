@@ -1,114 +1,115 @@
 * {
-    margin: 0px;
-    box-sizing: border-box;
-    background-color: #080710;
-  }
-  
+  margin: 0px;
+  box-sizing: border-box;
+  background-color: #080710;
+}
+
+body {
+  padding-top: 60px;
+}
 
 
+.logo_container {
+  width: 100%;
+  min-height: 20px;
+  background-color: #080710;
+  display: flex;
+  justify-content: space-evenly;
+  color: white;
+  margin-top: 
+  60px;
+}
 
-  
-  body {
-    padding-top: 60px;
-  }
-  
-  .logo_container {
-    width: 100%;
-    min-height: 20px;
-    background-color: #080710;
-    display: flex;
-    justify-content: space-evenly;
-    color: white;
-    margin-top: 
-    60px;
-  }
-  
-  .items {
-    display: flex;
-    justify-content: center;
-  }
-  
-  main {
-    margin-left: 20px;
-    margin-right: 20px;
-  }
-  
-  .navbar {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    background-color: #080710;
-    z-index: 999;
-  }
-  
-  .navbar ul {
-    padding: 0px;
-    overflow: hidden;
-  }
-  
-  .navbar a {
-    color: #656565;
-    text-decoration: none;
-    padding: 15px;
-    display: block;
-    text-align: center;
-  }
-  
-  .navbar a:hover {
-    transition: color 0.5s ease-in-out;
-    color: white;
-  }
-  
-  .navbar a:not(:hover) {
-    transition: color 0.5s ease-in-out;
-    color: #656565;
-  }
-  
-  
-  .navbar li {
-    float: left;
-  }
-  
-  .search_icon:hover {
-    transition: font-size 1s ease-in-out;
-    font-size: x-large;
-  }
-  
-  .search_icon:not(:hover) {
-    transition: font-size 1s ease-in-out;
-    font-size: large;
-  }
-  
-  .search_icon {
-    display: flex;
-  }
-  
-  .search_icon i {
-    color: white;
-    margin-left: 10px;
-  }
-  
-  .search_icon a {
-    text-decoration: none;
-    color: white;
-  }
-  
-  .logo i {
-    color: white;
-    margin-left: 20px;
-    font-size: larger;
-  }
-  
-  .logo i:hover {
-    transition: font-size 1s;
-    font-size: xx-large;
-  }
-  
-  .logo i:not(:hover) {
-    transition: font-size 1s ease-in-out;
-    font-size: large;
-  }
-  
+.items {
+  display: flex;
+  justify-content: center;
+}
+
+main {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: #080710;
+  z-index: 999;
+}
+
+.navbar ul {
+  padding: 0px;
+  overflow: hidden;
+}
+
+.navbar a {
+  color: #656565;
+  text-decoration: none;
+  padding: 15px;
+  display: block;
+  text-align: center;
+}
+
+.navbar a:hover {
+  transition: color 0.5s ease-in-out;
+  color: white;
+}
+
+.navbar a:not(:hover) {
+  transition: color 0.5s ease-in-out;
+  color: #656565;
+}
+
+
+.navbar li {
+  float: left;
+}
+
+.search_icon:hover {
+  transition: font-size 1s ease-in-out;
+  font-size: x-large;
+}
+
+.search_icon:not(:hover) {
+  transition: font-size 1s ease-in-out;
+  font-size: large;
+}
+
+.search_icon {
+  display: flex;
+}
+
+.search_icon i {
+  color: white;
+  margin-left: 10px;
+}
+
+.search_icon a {
+  text-decoration: none;
+  color: white;
+}
+
+.logo i {
+  color: white;
+  margin-left: 20px;
+  font-size: larger;
+}
+
+.logo i:hover {
+  transition: font-size 1s;
+  font-size: xx-large;
+}
+
+.logo i:not(:hover) {
+  transition: font-size 1s ease-in-out;
+  font-size: large;
+}
+
+.items h1 {
+  margin-left: 350px;
+  margin-right: 350px;
+}
 
   
   h3 {

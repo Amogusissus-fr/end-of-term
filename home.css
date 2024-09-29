@@ -9,7 +9,7 @@ body {
 }
 
 .logo_container {
-  width: 100vw;
+  width: 100%;
   min-height: 20px;
   background-color: #080710;
   display: flex;

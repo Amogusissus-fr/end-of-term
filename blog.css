@@ -7,6 +7,7 @@ body {
 * {
   margin: 0px;
   box-sizing: border-box;
+  background-color: #080710;
 }
 
 
@@ -84,6 +85,7 @@ main {
 
 .search_icon {
   display: flex;
+  margin-right: 0px;
 }
 
 .search_icon i {
@@ -112,6 +114,10 @@ main {
   font-size: large;
 }
 
+.items h1 {
+  margin-left: 350px;
+  margin-right: 350px;
+}
 
 .header {
   color: white;
@@ -147,11 +153,14 @@ main {
   font-size: x-large;
 }
 
+.card * {
+  background-color: white;
+}
 
 .card {
   background-color: white;
   padding: 20px;
-  margin-top: 20px;
+
   min-height: 200px;
 }
 
