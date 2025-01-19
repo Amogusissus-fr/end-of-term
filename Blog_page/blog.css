@@ -252,18 +252,15 @@ main {
   width: 75%;
 }
 
-.card1 * {
+.newPost * {
   background-color: white;
   color: black;
 }
 
-.card1 {
+.newPost {
   background-color: white;
   padding: 20px;
 
   min-height: 200px;
 }
 
-.header {
-  display: inline-block;
-}
