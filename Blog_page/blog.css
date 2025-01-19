@@ -213,3 +213,57 @@ main {
 .newsletter p {
   max-width: 50%;
 }
+
+.card_add * {
+  background-color: white;
+}
+
+.card_add {
+  background-color: white;
+  padding: 20px;
+
+  min-height: 200px;
+}
+.img input {
+  border: 2px solid black;
+  margin-right: 20px;
+}
+
+.submitBtn {
+  color: black;
+  font-size: 30px;
+  margin-bottom: 20px;
+}
+
+.submitBtn:hover {
+  transition: background-color 0.5s ease-in-out;
+  background-color: rgb(37, 246, 148);
+}
+
+.submitBtn:not(:hover) {
+  transition: background-color 0.5s ease-in-out;
+}
+
+.inputImage {
+  width: 300px;
+}
+
+.inputContent {
+  width: 75%;
+}
+
+.card1 * {
+  background-color: white;
+  color: black;
+}
+
+.card1 {
+  background-color: white;
+  padding: 20px;
+
+  min-height: 200px;
+}
+
+.header {
+  display: inline-block;
+}

@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Blog</title>
-  <link rel="stylesheet" href="./blog.css" />
+  <link rel="stylesheet" href="/Blog_page/blog.css" />
   <script
     src="https://kit.fontawesome.com/b25957ae4f.js"
     crossorigin="anonymous"
@@ -14,10 +14,10 @@
   <div class="items">
     <div class="navbar">
       <ul>
-        <li><a href="home.html">Home</a></li>
-        <li><a href="blog.html">Blog</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="contact.html">Contact</a></li>  
+        <li><a href="/Homepage/home.html">Home</a></li>
+        <li><a href="/Blog_page/blog.html">Blog</a></li>
+        <li><a href="/About_page/about.html">About</a></li>
+        <li><a href="/Contact-page/contact.html">Contact</a></li>  
       </ul>
     </div>
   <div class="menu_container">
@@ -30,8 +30,8 @@
       </div>
       <h1>News.</h1>
       <div class="search_icon">
-        <a href="search.html">Search</a>
-        <a href="search.html"><i class="fa-solid fa-magnifying-glass fa-l"></i></a>
+        <a href="/Search/search.html">Search</a>
+        <a href="/Search/search.html"><i class="fa-solid fa-magnifying-glass fa-l"></i></a>
       </div>
     </div>
   
@@ -45,21 +45,44 @@
   
   <div class="column">
       <div class="card">
-        <h2>Is caffeine good for your health?</h2>
+        <h2>Caffeine có tốt cho sức khỏe không?</h2>
         <h5>Dec 7, 2017</h5>
         <div class="img">
-          <img src="./image2.png" alt="" height="200px" width="300px">
-          <p>Caffeine consumption is generally considered safe, although habit forming. Some side effects linked to excess intake include anxiety, restlessness, tremors, irregular heartbeat, and trouble sleeping. Too much caffeine may also promote headaches, migraine, and high blood pressure in some individuals</p>
+          <img src="/image/image2.png" alt="" height="200px" width="300px">
+          <p>Tiêu thụ caffeine thường được coi là an toàn, mặc dù hình thành thói quen. Một số tác dụng phụ liên quan đến việc ăn quá nhiều bao gồm lo lắng, bồn chồn, run rẩy, nhịp tim không đều và khó ngủ. Quá nhiều caffeine cũng có thể gây đau đầu, đau nửa đầu và huyết áp cao ở một số người</p>
         </div>
       </div>
 
       <div class="card">
-        <h2>What are no sugar oatmeal cookies?</h2>
+        <h2>Bánh quy bột yến mạch không đường là gì?</h2>
         <h5>Dec 7, 2017</h5>
         <div class="img">
-          <img src="./image3.png" alt="" height="200px" width="300px">
-          <p>Low in sugar, these oatmeal cookies are naturally sweet from applesauce, bananas, and raisins — they're sure to satisfy a sweet tooth! They're also made without flour and lactose.</p>
+          <img src="/image/image3.png" alt="" height="200px" width="300px">
+          <p>Ít đường, những chiếc bánh quy bột yến mạch này có vị ngọt tự nhiên từ nước sốt táo, chuối và
+             nho khô - chúng chắc chắn sẽ làm hài lòng những người hảo ngọt! Chúng cũng được làm không
+              có bột mì và đường lactose.</p>
         </div>
+      </div>
+    <!-- Div này chứa bài đăng mới -->
+    <!-- <div class="card new-post">
+      <h2 class="header" style="color: black;"></h2>
+      <div class="img">
+          <img src="" alt="Image" class="image" height="200px" width="300px">
+      </div>
+      <p class="content"></p>
+  </div> -->
+  <div class="column" id="post-container">
+    <!-- Các bài đăng sẽ được thêm vào đây -->
+</div>
+
+
+      <div class="card_add">
+        <input type="text" class="inputHeader" placeholder="Nhập tiêu đề...">
+        <div class="img">
+          <input type="text" class="inputImage" placeholder="Đăng ảnh (link ảnh)">
+          <input type="text" class="inputContent" placeholder="Nhập nội dung ...">
+        </div>
+        <button class="submitBtn">Submit</button>
       </div>
   </div>
   
@@ -95,5 +118,7 @@
         nisi et fuga et enim exercitationem ipsam. Culpa consequatur occaecati.</p>
     </div>
   </div>
+
+  <script src="/Blog_page/blog.js"></script>
 </body>
 </html>
