@@ -264,3 +264,11 @@ main {
   min-height: 200px;
 }
 
+
+.column {
+  display: flex;
+}
+
+.posts {
+  display: flex;
+}

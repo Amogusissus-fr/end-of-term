@@ -210,13 +210,13 @@ b , p, h1, h2, h3, h4 {
     flex-direction: row;
   }
   
-  .quicklinks, .archives, .social {
+  .quicklinks, .archivesBtn, .social {
     display: flex;
     flex-direction: column;
     padding: 30px;
   }
   
-  .quicklinks p, .archives p, .social p {
+  .quicklinks p, .archivesBtn p, .social p {
     margin-top: 20px;
   }
   
@@ -261,6 +261,28 @@ b , p, h1, h2, h3, h4 {
   }
 
   .submit:not(:hover) {
+    transition: background-color 0.5s ease-in-out;
+    background-color: black;
+  }
+
+  .feedback {
+    display: flex;
+  }
+
+  .archivesBtn {
+    height: 80px;
+    text-align: center;
+    margin-right: 100px;
+    background-color: black;
+    color: white;
+  }
+
+  .archivesBtn:hover {
+    transition: background-color 0.5s ease-in-out;
+    background-color: blue;
+  }
+
+  .archivesBtn:not(:hover) {
     transition: background-color 0.5s ease-in-out;
     background-color: black;
   }

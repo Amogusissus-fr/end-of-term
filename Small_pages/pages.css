@@ -9,7 +9,7 @@
 
   
   .logo_container {
-    width: 100vw;
+    width: 100%;
     min-height: 20px;
     background-color: #080710;
     display: flex;
@@ -23,9 +23,8 @@
     justify-content: center;
   }
   
-  main {
-    margin-left: 20px;
-    margin-right: 20px;
+  .main {
+    width: 110%;
   }
   
   .navbar {
@@ -140,4 +139,9 @@ blockquote {
 .list {
   color: grey;
   font-size: larger;
+}
+
+.commentSection {
+  width: 100%;
+  background-color: white;
 }
