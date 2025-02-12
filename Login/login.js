@@ -31,7 +31,7 @@ LoginBtn.addEventListener("click", function () {
 });
 
 RedirectRegister.addEventListener("click", function () { 
-    window.location.href = "/Register/index.html";
+    window.location.href = "/Register/register.html";
 });
 
 // Hàm kiểm tra thông tin đăng nhập
