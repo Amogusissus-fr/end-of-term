@@ -19,7 +19,7 @@ registerBtn.addEventListener("click", function () {
 
     if (checkExistedUser(listUserLocalStorage, usernamelRegister.value) === true) {
         alert("Tài khoản này đã tồn tại, vui lòng tạo tài khoản khac")
-        window.location.href = "/Register/index.html";
+        window.location.href = "index.html";
         return
     } else {
         listUserLocalStorage.push({
