@@ -144,4 +144,9 @@ blockquote {
 .commentSection {
   width: 100%;
   background-color: white;
+
+}
+
+.comments {
+  border: 2px solid black;
 }
