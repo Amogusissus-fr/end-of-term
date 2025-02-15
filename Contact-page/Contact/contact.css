@@ -5,6 +5,7 @@
 }
 
 body {
+  background-color: #080710;
   padding-top: 60px;
 }
 
@@ -174,7 +175,6 @@ b , p, h1, h2, h3, h4 {
     /* border: 2px solid #000;*/
 }
 
-/* Điều chỉnh tiêu đề và văn bản */
 .info h1 {
     font-size: 1.8rem;
     font-weight: bold;
@@ -249,20 +249,19 @@ b , p, h1, h2, h3, h4 {
   }
 
   .submit {
-    background-color: black;
+    background: linear-gradient(45deg, #ff4b2b, #ff416c);
+    border: none;
+    padding: 12px 20px;
+    font-size: 18px;
     color: white;
-    font-size: 30px;
-    margin-bottom: 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.3s ease-in-out;
   }
-
+  
   .submit:hover {
-    transition: background-color 0.5s ease-in-out;
-    background-color: blue;
-  }
-
-  .submit:not(:hover) {
-    transition: background-color 0.5s ease-in-out;
-    background-color: black;
+    transform: scale(1.05);
+    background: linear-gradient(45deg, #ff416c, #ff4b2b);
   }
 
   .feedback {
@@ -270,19 +269,63 @@ b , p, h1, h2, h3, h4 {
   }
 
   .archivesBtn {
-    height: 80px;
-    text-align: center;
-    margin-right: 100px;
-    background-color: black;
+    background: linear-gradient(45deg, #ff4b2b, #ff416c);
+    height: 45px;
+    border: none;
+    padding: 12px 20px;
+    font-size: 18px;
     color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.3s ease-in-out;
   }
 
   .archivesBtn:hover {
-    transition: background-color 0.5s ease-in-out;
-    background-color: blue;
+    transform: scale(1.05);
+    background: linear-gradient(45deg, #ff416c, #ff4b2b);
   }
 
-  .archivesBtn:not(:hover) {
-    transition: background-color 0.5s ease-in-out;
-    background-color: black;
-  }
+.form {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+  text-align: center;
+  margin: 20px auto;
+  max-width: 500px;
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
+}
+
+.form input {
+  width: 90%;
+  padding: 10px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.card_add input::placeholder {
+  color: #ccc;
+}
+
+.info {
+  background: linear-gradient(135deg, #1e1e2e, #25263b);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  transition: 0.3s ease-in-out;
+}
+
+/* Hiệu ứng hover cho bài viết */
+.info:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(255, 255, 255, 0.2);
+}
+
+.info1, .info2 {
+  border-radius: 20px;
+}

@@ -160,6 +160,7 @@ img {
 }
 
 .intro {
+  background: linear-gradient(135deg, #1e1e2e, #25263b);
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -173,6 +174,7 @@ img {
     min-height: 200px;
     margin-bottom: 20px; /* Khoảng cách giữa các hàng */
     padding: 20px;
+    border-radius: 20px;
     /* border: 2px solid #000; Thêm viền để kiểm tra */
 }
 
@@ -181,6 +183,7 @@ img {
     font-size: 1.8rem;
     font-weight: bold;
     margin-bottom: 10px;
+    opacity: 1;
 }
 
 .intro p {
@@ -236,3 +239,20 @@ img {
   .newsletter p {
     max-width: 50%;
   }
+
+  /* Bài viết */
+.intro {
+  background: linear-gradient(135deg, #1e1e2e, #25263b);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  transition: 0.3s ease-in-out;
+}
+
+/* Hiệu ứng hover cho bài viết */
+.intro:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(255, 255, 255, 0.2);
+}
+

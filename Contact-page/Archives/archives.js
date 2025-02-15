@@ -2,6 +2,7 @@ let inputHeader = document.getElementsByClassName("inputHeader");
 let inputImage = document.getElementsByClassName("inputImage");
 let inputContent = document.getElementsByClassName("inputContent");
 let submitBtn = document.querySelector(".submitBtn");
+let leaveBtn = document.querySelector(".leaveBtn");
 
 // Lấy phần listdiscussion ra trc
 let listDiscussionLocalStorage = JSON.parse(localStorage.getItem("listDiscussion"))
@@ -77,3 +78,7 @@ function Discussions() {
 }
 
 Discussions()
+
+leaveBtn.addEventListener("click", function () {
+    window.location.href = "/Contact-page/Contact/contact.html"
+})

@@ -128,41 +128,69 @@ main {
   text-decoration: none;
 }
 
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-}
-
-
-.column {
-  width: 100%;
-}
-
-
-.img {
-  width: 100%;
-  height: 200px;
-  display: flex;
-}
-
-.img p {
-  padding: 20px;
-  max-width: 75%;
-  font-size: x-large;
-}
-
-.card * {
-  background-color: white;
+body {
+  background-color: #080710;
+  color: white;
+  font-family: Arial, sans-serif;
 }
 
 .card {
-  background-color: white;
+  background: linear-gradient(135deg, #1e1e2e, #25263b);
   padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  color: white;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
 
-  min-height: 200px;
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(255, 255, 255, 0.2);
+}
+
+
+
+
+
+
+.card_add input {
+  width: 90%;
+  padding: 10px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  outline: none;
+  transition: background-color 0.3s ease-in-out;
+}
+
+
+.submitBtn {
+  background: linear-gradient(45deg, #ff4b2b, #ff416c);
+  border: none;
+  padding: 12px 20px;
+  font-size: 18px;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: 0.3s ease-in-out;
+}
+
+.submitBtn:hover {
+  transform: scale(1.05);
+  background: linear-gradient(45deg, #ff416c, #ff4b2b);
+}
+
+.posts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Tự động điều chỉnh số cột */
+  gap: 20px; /* Khoảng cách giữa các bài đăng */
+  width: 100%;
+  justify-content: center;
+  background: #f1f1f1;
 }
 
 
@@ -180,24 +208,22 @@ main {
   display: flex;
 }
 
-.links {  
-  width: 50%;
+.links {  width: 50%;
   height: 100%;
   /* border: 2px solid red; */
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: row;
-  min-height: 50;
 }
 
-.quicklinks, .archives, .social {
+.quicklinks, .archivesBtn, .social {
   display: flex;
   flex-direction: column;
   padding: 30px;
 }
 
-.quicklinks p, .archives p, .social p {
+.quicklinks p, .archivesBtn p, .social p {
   margin-top: 20px;
 }
 
@@ -213,80 +239,4 @@ main {
 
 .newsletter p {
   max-width: 50%;
-}
-
-.card_add * {
-  background-color: white;
-}
-
-.card_add {
-  background-color: white;
-  padding: 20px;
-
-  min-height: 200px;
-}
-.img input {
-  border: 2px solid black;
-  margin-right: 20px;
-}
-
-.submitBtn {
-  color: black;
-  font-size: 30px;
-  margin-bottom: 20px;
-}
-
-.submitBtn:hover {
-  transition: background-color 0.5s ease-in-out;
-  background-color: rgb(37, 246, 148);
-}
-
-.submitBtn:not(:hover) {
-  transition: background-color 0.5s ease-in-out;
-}
-
-.inputImage {
-  width: 300px;
-}
-
-.inputContent {
-  width: 75%;
-}
-
-.newPost * {
-  background-color: white;
-  color: black;
-}
-
-.newPost {
-  background-color: white;
-  padding: 20px;
-
-  min-height: 200px;
-}
-
-
-.column {
-  display: flex;
-  flex-wrap: wrap;
-  width: 100%;
-  justify-content: center;
-}
-
-
-.posts {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Tự động điều chỉnh số cột */
-  gap: 20px; /* Khoảng cách giữa các bài đăng */
-  width: 100%;
-  justify-content: center;
-  background: #f1f1f1;
-}
-
-.card {
-  background-color: white;
-  padding: 20px;
-  border: 1px solid black;
-  min-width: 250px; /* Đảm bảo bài viết có kích thước tối thiểu */
-  max-width: 100%;
 }
