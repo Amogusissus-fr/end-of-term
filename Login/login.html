@@ -1,40 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
- 
     <link rel="stylesheet" href="/Login/login.css">
-    <script
-    src="https://kit.fontawesome.com/b25957ae4f.js"
-    crossorigin="anonymous"
-  ></script>
+  </head>
+  <body>
 
-</head>
-<body>
-    <form action="/Homepage/home.html">
-        <h3>Login Here</h3>
-    
-        <label for="username">Username</label>
-        <input type="text" placeholder="Email or Phone" id="usernameLogin">
-    
-        <label for="password">Password</label>
-        <input type="password" placeholder="Password" id="passwordLogin">
-        
-    
-        <button type="button" class="LoginBtn">Log In</button>
-        <button type="button" class="RedirectRegister">Register</button>
+    <div class="login">
+      <h1 style="font-style: italic;  font-family: 'Caveat', cursive;">Welcome back</h1>
+      <h1>Login</h1>
+      <h2>Email</h2>
+      <input type="text" name="" id="username_input_login" />
+      <h2>Password</h2>
+      <input type="text" name="" id="password_input_login" />
+      <button id="login_btn">Login</button>
+      <button id="register_btn">Register</button>
+    </div>
 
-        <div class="social">
-            <div class="go">
-                <i class="fa fa-google"></i> Google
-            </div>
-            <div class="fb">
-                <i class="fa fa-facebook"></i> Facebook
-            </div>
-
-        </div>
-    </form>
-
-    <script src="/Login/login.js"></script>
-</body>
+    <script type="module" src="/Login/login.js"></script>
+  </body>
 </html>

@@ -57,9 +57,9 @@ function Posts() {
         postImageDiv.className = "img";
 
         let postImage = document.createElement("img");
-        postImage.src = post.Image || "default-image.png"; // Sử dụng ảnh mặc định nếu không có link
+        postImage.src = post.Image 
         postImage.alt = "Image";
-        postImage.width = 300;
+        postImage.width = 150;
         postImage.height = 200;
 
         let postContent = document.createElement("p");

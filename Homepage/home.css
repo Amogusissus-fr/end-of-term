@@ -1,11 +1,12 @@
 * {
   margin: 0px;
   box-sizing: border-box;
-  background-color: #080710;
 }
 
 body {
   padding-top: 60px;
+  /* background-image: linear-gradient(to right bottom, #0F2027, #203A43, #2C5364); */
+  background-color: #080710;
 }
 
 .logo_container {
@@ -26,7 +27,7 @@ body {
 
 main {
   margin-left: 20px;
-  margin-right: 20px;
+  margin-right: 20p;
 }
 
 .navbar {
@@ -350,7 +351,7 @@ p {
 .LogoutBtn:hover {
   transition: color 1s;
   transition: border 1s;
-  color: white;
+  color: #ffffff;
   border: 2px solid white;
   cursor: pointer;
 }
@@ -358,15 +359,23 @@ p {
 .LogoutBtn:not(:hover) {
   transition: color 1s ease-in-out;
   transition: border 1s ease-in-out;
-  color: #656565;
-  border: 2px solid #656565;
+  color: #ffffff;
+  border: 2px solid linear-gradient(#5f2c82, #49a09d);
 }
 
 .LogoutBtn {
-  border: 2px solid #656565;
+  border: 2px solid linear-gradient(#5f2c82, #49a09d);
   margin-left: 10px;
+  background-image: linear-gradient(#5f2c82, #49a09d);
 }
 
 .user {
   display: flex;
+}
+
+.menu_container h1 {
+  font-style: italic;
+  font-size: 100px;
+  font-family: 'Dancing Script', cursive;
+
 }

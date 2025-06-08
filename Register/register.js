@@ -1,51 +1,68 @@
-let usernamelRegister = document.getElementById("usernameRegister")
-let passwordRegister = document.getElementById("passwordRegister")
-let registerBtn = document.querySelector(".registerBtn")
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js";
+import {
+  getDatabase,
+  set,
+  ref,
+  update,
+} from "https://www.gstatic.com/firebasejs/10.5.2/firebase-database.js";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js";
 
-// Lấy phần listUser ra trc
-let listUserLocalStorage = JSON.parse(localStorage.getItem("listUser"))
-// nếu chx có thì ta tạo mới
-if (listUserLocalStorage === null) {
-    localStorage.setItem("listUser", JSON.stringify([]))
-    window.location.reload()
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyDnw_29_QGU6wmYNorqtOEupHjjCdur70k",
+  authDomain: "jsi41-bea38.firebaseapp.com",
+  databaseURL: "https://jsi41-bea38-default-rtdb.firebaseio.com",
+  projectId: "jsi41-bea38",
+  storageBucket: "jsi41-bea38.firebasestorage.app",
+  messagingSenderId: "451958885494",
+  appId: "1:451958885494:web:e269c962c1a650f0576357",
+  measurementId: "G-6E82941PVL"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
+const auth = getAuth();
+
+let username_register = document.getElementById("username_input_register");
+let password_register = document.getElementById("password_input_register");
+let register_btn = document.getElementById("register_btn");
+let login_btn = document.getElementById("login_btn")
+
+// Đăng ký 1 tài khoản
+register_btn.addEventListener("click", function () {
+  let username = username_register.value;
+  let password = password_register.value;
+
+  createUserWithEmailAndPassword(auth, username, password)
+    .then((userCredential) => {
+      const user = userCredential.user;
+      set(ref(database, "user/" + user.uid), {
+        username: username,
+        password: password,
+      });
+
+      alert("Tạo tài khoản thành công");
+      window.location.href = "/Login/login.html"
+    })
+    .catch((err) => {
+      const errorCode = err.code;
+      const errorMess = err.message;
+
+      alert(errorMess);
+    });
+});
+
+login_btn.addEventListener("click", () => {
+    window.location.href = "/Login/login.html"
 }
-
-console.log(listUserLocalStorage);
-
-
-registerBtn.addEventListener("click", function () {
-    console.log(usernamelRegister.value);
-    console.log(passwordRegister.value);
-
-    if (checkExistedUser(listUserLocalStorage, usernamelRegister.value) === true) {
-        alert("Tài khoản này đã tồn tại, vui lòng tạo tài khoản khac")
-        window.location.href = "index.html";
-        return
-    } else {
-        listUserLocalStorage.push({
-            username: usernamelRegister.value,
-            password: passwordRegister.value
-        })
-    }
-
-    
-    localStorage.setItem("listUser", JSON.stringify(listUserLocalStorage))
-
-    localStorage.setItem("SuccessUserLogin",usernamelRegister.value)
-
-    alert("Tạo tài khoản thành công") 
-
-    usernamelRegister.value = "";
-    passwordRegister.value = "";
-})
-
-function checkExistedUser(arrayUserFromLocal, inputUsernameRegister) {
-    for (let i = 0; i < arrayUserFromLocal.length; i++) {
-        if (arrayUserFromLocal[i].username === inputUsernameRegister) {
-            return true
-        }
-    }
-
-    return false
-}
-
+)

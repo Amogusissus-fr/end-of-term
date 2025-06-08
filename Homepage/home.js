@@ -14,6 +14,6 @@ let LogoutBtn = document.querySelector(".LogoutBtn")
 
 LogoutBtn.addEventListener("click", function () {
     localStorage.removeItem("SuccessUserLogin");
-    window.location.href = "/Login/login.html"
+    window.location.href = "/Login/login.html";
 
 })

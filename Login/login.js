@@ -1,48 +1,67 @@
-let usernameLogin = document.getElementById("usernameLogin");
-let passwordLogin = document.getElementById("passwordLogin");
-let LoginBtn = document.querySelector(".LoginBtn");
-let RedirectRegister = document.querySelector(".RedirectRegister");
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js";
+import {
+  getDatabase,
+  set,
+  ref,
+  update,
+} from "https://www.gstatic.com/firebasejs/10.5.2/firebase-database.js";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js";
 
-LoginBtn.addEventListener("click", function () {
-    // Lấy danh sách người dùng từ localStorage
-    let listUserLocalStorage = JSON.parse(localStorage.getItem("listUser"));
-    
-    if (listUserLocalStorage === null || listUserLocalStorage.length === 0) {
-        alert("Không có tài khoản nào được đăng ký. Vui lòng đăng ký trước.");
-        return;
-    }
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
-    // Kiểm tra thông tin đăng nhập
-    let isExisted = checkLogin(listUserLocalStorage, usernameLogin.value, passwordLogin.value);
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyDnw_29_QGU6wmYNorqtOEupHjjCdur70k",
+  authDomain: "jsi41-bea38.firebaseapp.com",
+  databaseURL: "https://jsi41-bea38-default-rtdb.firebaseio.com",
+  projectId: "jsi41-bea38",
+  storageBucket: "jsi41-bea38.firebasestorage.app",
+  messagingSenderId: "451958885494",
+  appId: "1:451958885494:web:e269c962c1a650f0576357",
+  measurementId: "G-6E82941PVL"
+};
 
-    if (isExisted) {
-        // Đăng nhập thành công
-        alert("Đăng nhập thành công!");
-        localStorage.setItem("SuccessUserLogin", usernameLogin.value); // Lưu thông tin đăng nhập thành công
-        window.location.href = "/Homepage/home.html"; // Chuyển hướng sang trang home
-    } else {
-        // Đăng nhập thất bại
-        alert("Sai tên đăng nhập hoặc mật khẩu. Vui lòng thử lại.");
-    }
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
+const auth = getAuth();
 
-    // Xóa thông tin nhập sau khi kiểm tra
-    usernameLogin.value = "";
-    passwordLogin.value = "";
+let username_login = document.getElementById("username_input_login");
+let password_login = document.getElementById("password_input_login");
+let login_btn = document.getElementById("login_btn");
+let register_btn = document.getElementById("register_btn")
+
+// Đăng nhập 1 tải khoản có sẵn
+login_btn.addEventListener("click", function () {
+  let username = username_login.value;
+  let password = password_login.value;
+
+  signInWithEmailAndPassword(auth, username, password)
+    .then((userCredential) => {
+      const user = userCredential.user;
+      let date = new Date();
+      update(ref(database, "user/" + user.uid), {
+        lastLogin: date,
+      });
+      localStorage.setItem("SuccessUserLogin", username);
+      alert("Đăng nhập thành công");
+      window.location.href = "/Homepage/home.html"
+    })
+    .catch((err) => {
+      const errorCode = err.code;
+      const errorMess = err.message;
+
+      alert(errorMess);
+    });
 });
 
-RedirectRegister.addEventListener("click", function () { 
-    window.location.href = "index.html";
-});
-
-// Hàm kiểm tra thông tin đăng nhập
-function checkLogin(arrayUserFromLocal, inputUsername, inputPassword) {
-    for (let i = 0; i < arrayUserFromLocal.length; i++) {
-        if (
-            arrayUserFromLocal[i].username === inputUsername &&
-            arrayUserFromLocal[i].password === inputPassword
-        ) {
-            return true; // Đăng nhập thành công
-        }
-    }
-    return false; // Đăng nhập thất bại
-}
+register_btn.addEventListener("click", () => {
+  window.location.href = "/Register/index.html"
+})
