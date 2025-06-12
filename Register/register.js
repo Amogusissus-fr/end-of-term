@@ -4,12 +4,10 @@ import {
   getDatabase,
   set,
   ref,
-  update,
 } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-database.js";
 import {
   getAuth,
   createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
 } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js";
 
 // TODO: Add SDKs for Firebase products that you want to use
