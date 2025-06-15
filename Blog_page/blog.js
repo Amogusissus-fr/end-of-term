@@ -1,132 +1,161 @@
-// Import the functions you need from the SDKs you need
+// Import Firebase SDK
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js";
 import {
   getDatabase,
   set,
   ref,
+  remove,
+  update,
+  get,
 } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-database.js";
-import {
-  getAuth,
-  createpostsWithEmailAndPassword,
-} from "https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js";
 
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// Firebase cấu hình
 const firebaseConfig = {
   apiKey: "AIzaSyDnw_29_QGU6wmYNorqtOEupHjjCdur70k",
   authDomain: "jsi41-bea38.firebaseapp.com",
   databaseURL: "https://jsi41-bea38-default-rtdb.firebaseio.com",
   projectId: "jsi41-bea38",
-  storageBucket: "jsi41-bea38.firebasestorage.app",
+  storageBucket: "jsi41-bea38.appspot.com",
   messagingSenderId: "451958885494",
   appId: "1:451958885494:web:e269c962c1a650f0576357",
-  measurementId: "G-6E82941PVL",
+  measurementId: "G-6E82941PVL"
 };
 
-// Initialize Firebase
+// Khởi tạo Firebase
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
-const auth = getAuth();
 
-let inputHeader = document.getElementsByClassName("inputHeader");
-let inputImage = document.getElementsByClassName("inputImage");
-let inputContent = document.getElementsByClassName("inputContent");
-let submitBtn = document.querySelector(".submitBtn");
+// Lấy phần tử HTML
+let inputHeader = document.getElementById("inputHeader");
+let inputImage = document.getElementById("inputImage");
+let inputContent = document.getElementById("inputContent");
+let submit_button = document.getElementById("submitPostBtn");
+let my_content = document.querySelector(".my_content");
+let SuccessUser = localStorage.getItem("SuccessUserLogin");
+console.log("SuccessUser:", SuccessUser);
 
-// // Lấy phần listPost ra trc
-// let listPostLocalStorage = JSON.parse(localStorage.getItem("listPost"))
-// // nếu chx có thì ta tạo mới
-// if (listPostLocalStorage === null) {
-//     localStorage.setItem("listPost", JSON.stringify([]))
-//     window.location.reload()
-// }
-
-submitBtn.addEventListener("click", function () {
-  let Header = inputHeader[0].value;
-  let Image = inputImage[0].value;
-  let Content = inputContent[0].value;
-
-  if (Header === "" || Content === "") {
+// Thêm bài viết
+submit_button.addEventListener("click", function () {
+  if (inputHeader.value === "" || inputImage.value === "" || inputContent.value === "") {
     alert("Vui lòng điền đầy đủ thông tin!");
-    return;
+  } else {
+    const postId = Date.now(); // dùng timestamp làm id
+    const postData = {
+      header: inputHeader.value,
+      image: inputImage.value,
+      content: inputContent.value,
+      createdAt: new Date().toISOString(),
+      user: SuccessUser,
+    };
+
+    const postRef = ref(database, "posts/" + postId);
+    set(postRef, postData)
+      .then(() => {
+        alert("Đăng bài thành công!");
+        inputHeader.value = "";
+        inputImage.value = "";
+        inputContent.value = "";
+        loadPosts(); // tải lại sau khi đăng
+      })
+      .catch((err) => {
+        alert("Lỗi khi lưu bài viết: " + err.message);
+      });
   }
-  listPostLocalStorage.push({
-    Content: Content,
-    Image: Image,
-    Header: Header,
-  });
-
-  localStorage.setItem("listPost", JSON.stringify(listPostLocalStorage));
-
-  inputHeader[0].value = "";
-  inputImage[0].value = "";
-  inputContent[0].value = "";
-
-  alert("Bài đăng mới đã được thêm!");
-  window.location.reload();
 });
 
-function Posts() {
-  let postsContainer = document.querySelector(".posts");
-  postsContainer.innerHTML = "";
+// Hàm tải bài viết (dùng get)
+function loadPosts() {
+  const postsRef = ref(database, "posts/");
+  get(postsRef)
+    .then((snapshot) => {
+      my_content.innerHTML = "";
+      if (snapshot.exists()) {
+        const data = snapshot.val();
+        const postList = Object.entries(data).sort((a, b) => b[0] - a[0]);
 
-  for (let i = 0; i < listPostLocalStorage.length; i++) {
-    let post = listPostLocalStorage[i];
+        postList.forEach(([id, post]) => {
+          const div_content = document.createElement("div");
+          div_content.className = "content";
+          div_content.setAttribute("data-id", id);
 
-    // Tạo các phần tử HTML cho bài đăng
-    let postDiv = document.createElement("div");
-    postDiv.className = "card";
+          // Hiển thị phần nội dung
+          div_content.innerHTML = `
+            <h2 class="post-header">${post.header}</h2>
+            <h5>${new Date(post.createdAt).toLocaleDateString()}</h5>
+            <h5>Author: ${post.user}</h5>
+            <div class="img">
+              <img class="post-image" src="${post.image}" alt="Ảnh" height="200px" width="300px">
+              <p class="post-content">${post.content}</p>
+            </div>
+            <div class="post-buttons"></div>
+          `;
 
-    let postHeader = document.createElement("h2");
-    postHeader.innerText = post.Header;
+          // Chỉ chủ bài viết mới thấy nút "Edit" và "Delete"
+          if (post.user === SuccessUser) {
+            const buttonContainer = div_content.querySelector(".post-buttons");
 
-    let postImageDiv = document.createElement("div");
-    postImageDiv.className = "img";
+            const editBtn = document.createElement("button");
+            editBtn.className = "edit_button";
+            editBtn.textContent = "Edit";
+            editBtn.style.marginLeft = "10px";
 
-    let postImage = document.createElement("img");
-    postImage.src = post.Image;
-    postImage.alt = "Image";
-    postImage.width = 150;
-    postImage.height = 200;
+            const deleteBtn = document.createElement("button");
+            deleteBtn.className = "delete_button";
+            deleteBtn.textContent = "Delete";
+            deleteBtn.style.marginLeft = "10px";
 
-    let postContent = document.createElement("p");
-    postContent.innerText = post.Content;
+            // Gắn sự kiện sửa
+            editBtn.addEventListener("click", () => {
+              const headerElem = div_content.querySelector(".post-header");
+              const imageElem = div_content.querySelector(".post-image");
+              const contentElem = div_content.querySelector(".post-content");
 
-    let editBtn = document.createElement("button");
-    editBtn.className = "editBtn";
+              const newHeader = prompt("Sửa tiêu đề:", headerElem.innerText);
+              const newImage = prompt("Sửa link ảnh:", imageElem.src);
+              const newContent = prompt("Sửa nội dung:", contentElem.innerText);
 
-    let deleteBtn = document.createElement("button");
-    deleteBtn.className = "deleteBtn";
+              if (newHeader && newImage && newContent) {
+                const updates = {
+                  header: newHeader,
+                  image: newImage,
+                  content: newContent,
+                  createdAt: post.createdAt
+                };
 
-    // Thêm các phần tử vào bài đăng
-    postImageDiv.appendChild(postImage);
-    postDiv.appendChild(postHeader);
-    postDiv.appendChild(postImageDiv);
-    postDiv.appendChild(postContent);
+                update(ref(database, "posts/" + id), updates)
+                  .then(() => {
+                    alert("Cập nhật thành công");
+                    loadPosts();
+                  })
+                  .catch((err) => alert("Lỗi cập nhật: " + err.message));
+              }
+            });
 
-    // Thêm bài đăng vào container
-    postsContainer.appendChild(postDiv);
-  }
+            // Gắn sự kiện xoá
+            deleteBtn.addEventListener("click", () => {
+              const confirmDelete = confirm("Bạn có chắc chắn muốn xoá bài viết này?");
+              if (confirmDelete) {
+                remove(ref(database, "posts/" + id))
+                  .then(() => {
+                    alert("Đã xoá bài viết");
+                    loadPosts();
+                  })
+                  .catch((err) => alert("Lỗi xoá: " + err.message));
+              }
+            });
+
+            buttonContainer.appendChild(editBtn);
+            buttonContainer.appendChild(deleteBtn);
+          }
+
+          my_content.appendChild(div_content);
+        });
+      }
+    })
+    .catch((error) => {
+      console.error("Lỗi khi tải bài viết:", error);
+    });
 }
 
-Posts();
-
-createposts(postsname, password)
-  .then((postsCredential) => {
-    const posts = postsCredential.posts;
-    set(ref(database, "posts/" + posts.uid), {
-      postsname: postsname,
-      password: password,
-    });
-
-    alert("Tạo bài đăng thành công");
-  })
-  .catch((err) => {
-    const errorCode = err.code;
-    const errorMess = err.message;
-
-    alert(errorMess);
-  });
+// Gọi lần đầu khi trang vừa load
+loadPosts();

@@ -6,14 +6,16 @@
 
 body {
   padding-top: 60px;
-  background-image: linear-gradient(to right, #1FA2FF, #12D8FA, #A6FFCB);
-  /* background-color: #080710; */
+  background-image: url(/image/back5.jpg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }
 
 .logo_container {
   width: 100%;
   min-height: 20px;
-  background-image: linear-gradient(to right, #1FA2FF, #12D8FA, #A6FFCB);
+
   display: flex;
   justify-content: space-evenly;
   color: white;
@@ -21,14 +23,10 @@ body {
   60px;
 }
 
-.items * {
-  background-color: #080710;
-}
 
 .items {
   display: flex;
   justify-content: center;
-    background-image: linear-gradient(to right, #1FA2FF, #12D8FA, #A6FFCB);
 }
 
 main {
@@ -127,13 +125,11 @@ main {
 }
 
 body {
-  background-color: #080710;
   color: white;
   font-family: Arial, sans-serif;
 }
 
 .card {
-  background: linear-gradient(135deg, #1e1e2e, #25263b);
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
@@ -151,6 +147,18 @@ body {
 
 
 
+.card_add {
+  padding: 30px;
+  border-radius: 15px;
+  max-width: 600px;
+  margin: 40px auto;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 
 .card_add input {
   width: 90%;
@@ -166,18 +174,19 @@ body {
 }
 
 
-.submit {
+#submitPostBtn {
   background: linear-gradient(45deg, #ff4b2b, #ff416c);
   border: none;
-  padding: 12px 20px;
+  padding: 12px 24px;
   font-size: 18px;
   color: white;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 8px;
   transition: 0.3s ease-in-out;
+  margin-top: 10px;
 }
 
-.submit:hover {
+#submitPostBtn:hover {
   transform: scale(1.05);
   background: linear-gradient(45deg, #ff416c, #ff4b2b);
 }
@@ -199,7 +208,6 @@ body {
   height: 50vh;
   width: 100%;
   display: flex;
-  background-image: linear-gradient(135deg, #74ebd5, #ACB6E5);
 }
 
 .links {  width: 50%;

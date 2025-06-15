@@ -1,6 +1,9 @@
 /* Đặt nền tối cho toàn trang */
 body {
-  background-color: #080710;
+  background-image: url(/image/back4.jpg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
   color: white;
   font-family: Arial, sans-serif;
 }
@@ -35,7 +38,7 @@ body {
 }
 
 /* Nút bấm */
-.submitBtn, .leaveBtn {
+#submitBtn, #leaveBtn {
   background: linear-gradient(45deg, #ff4b2b, #ff416c);
   border: none;
   padding: 12px 20px;
@@ -47,7 +50,7 @@ body {
 }
 
 /* Hiệu ứng hover */
-.submitBtn:hover, .leaveBtn:hover {
+#submitBtn:hover, #leaveBtn:hover {
   transform: scale(1.05);
   background: linear-gradient(45deg, #ff416c, #ff4b2b);
 }

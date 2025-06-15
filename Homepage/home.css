@@ -6,14 +6,17 @@
 
 body {
   padding-top: 60px;
-  background-image: linear-gradient(to right, #1FA2FF, #12D8FA, #A6FFCB);
-  /* background-color: #080710; */
+  background-image: url("/image/back.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
+
+
 
 .logo_container {
   width: 100%;
   min-height: 20px;
-  background-image: linear-gradient(to right, #1FA2FF, #12D8FA, #A6FFCB);
   display: flex;
   justify-content: space-evenly;
   color: white;
@@ -251,7 +254,6 @@ p {
 
 .featured {
   width: 100%;
-  background-image: linear-gradient(to right, #009FFF,#ec2F4B);
   margin-top: 600px;
   padding: 20px;
   display: flex;
@@ -259,9 +261,6 @@ p {
   justify-content: space-between;
 }
 
-.featured * {
-  background-color: white;
-}
 
 .featured2 {
   margin-top: 20px;
@@ -306,7 +305,6 @@ p {
   height: 50vh;
   width: 100%;
   display: flex;
-  background-image: linear-gradient(135deg, #74ebd5, #ACB6E5);
 }
 
 .links {  width: 50%;

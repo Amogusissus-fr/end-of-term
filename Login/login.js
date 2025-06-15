@@ -50,7 +50,7 @@ login_btn.addEventListener("click", function () {
       update(ref(database, "user/" + user.uid), {
         lastLogin: date,
       });
-      localStorage.setItem("SuccessUserLogin", username);
+      localStorage.setItem("SuccessUserLogin", user.email);
       alert("Đăng nhập thành công");
       window.location.href = "/Homepage/home.html"
     })

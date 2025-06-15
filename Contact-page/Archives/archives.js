@@ -1,84 +1,170 @@
-let inputHeader = document.getElementsByClassName("inputHeader");
-let inputImage = document.getElementsByClassName("inputImage");
-let inputContent = document.getElementsByClassName("inputContent");
-let submitBtn = document.querySelector(".submitBtn");
-let leaveBtn = document.querySelector(".leaveBtn");
+// Import Firebase SDK
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js";
+import {
+  getDatabase,
+  set,
+  ref,
+  remove,
+  update,
+  get,
+} from "https://www.gstatic.com/firebasejs/10.5.2/firebase-database.js";
 
-// Lấy phần listdiscussion ra trc
-let listDiscussionLocalStorage = JSON.parse(localStorage.getItem("listDiscussion"))
-// nếu chx có thì ta tạo mới
-if (listDiscussionLocalStorage === null) {
-    localStorage.setItem("listDiscussion", JSON.stringify([]))
-    window.location.reload()
-}
+// Firebase cấu hình
+const firebaseConfig = {
+  apiKey: "AIzaSyDnw_29_QGU6wmYNorqtOEupHjjCdur70k",
+  authDomain: "jsi41-bea38.firebaseapp.com",
+  databaseURL: "https://jsi41-bea38-default-rtdb.firebaseio.com",
+  projectId: "jsi41-bea38",
+  storageBucket: "jsi41-bea38.appspot.com",
+  messagingSenderId: "451958885494",
+  appId: "1:451958885494:web:e269c962c1a650f0576357",
+  measurementId: "G-6E82941PVL",
+};
 
-submitBtn.addEventListener("click", function () {
-    let Header = inputHeader[0].value;
-    let Image = inputImage[0].value;
-    let Content = inputContent[0].value;
+// Khởi tạo Firebase
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
 
-    if (Header === "" || Content === "") {
-        alert("Vui lòng điền đầy đủ thông tin!");
-        return;
-    }
-    listDiscussionLocalStorage.push({
-        Content: Content,
-        Image: Image,
-        Header: Header
+// Lấy phần tử HTML
+let inputHeader = document.getElementById("inputHeader");
+let inputImage = document.getElementById("inputImage");
+let inputContent = document.getElementById("inputContent");
+let submit_button = document.getElementById("submitBtn");
+let my_content = document.querySelector(".my_content");
+let SuccessUser = localStorage.getItem("SuccessUserLogin");
+console.log("SuccessUser:", SuccessUser);
+let leaveBtn = document.getElementById("leaveBtn")
 
-    })
-    
-    localStorage.setItem("listDiscussion", JSON.stringify(listDiscussionLocalStorage))
+// Thêm bài viết
+submit_button.addEventListener("click", function () {
+  if (
+    inputHeader.value === "" ||
+    inputImage.value === "" ||
+    inputContent.value === ""
+  ) {
+    alert("Vui lòng điền đầy đủ thông tin!");
+  } else {
+    const feedbackId = Date.now(); // dùng timestamp làm id
+    const feedbackData = {
+      header: inputHeader.value,
+      image: inputImage.value,
+      content: inputContent.value,
+      createdAt: new Date().toISOString(),
+      user: SuccessUser,
+    };
 
-
-
-    inputHeader[0].value = "";
-    inputImage[0].value = "";
-    inputContent[0].value = "";
-
-    alert("Bài đăng mới đã được thêm!");
-    window.location.reload()
+    const feedbackRef = ref(database, "feedbacks/" + feedbackId);
+    set(feedbackRef, feedbackData)
+      .then(() => {
+        alert("Đăng bài thành công!");
+        inputHeader.value = "";
+        inputImage.value = "";
+        inputContent.value = "";
+        loadfeedbacks(); // tải lại sau khi đăng
+      })
+      .catch((err) => {
+        alert("Lỗi khi lưu bài viết: " + err.message);
+      });
+  }
 });
 
-function Discussions() {
-    let discussionsContainer = document.querySelector(".discussions");
-    discussionsContainer.innerHTML = "";
+// Hàm tải bài viết (dùng get)
+function loadfeedbacks() {
+  const feedbacksRef = ref(database, "feedbacks/");
+  get(feedbacksRef).then((snapshot) => {
+    my_content.innerHTML = "";
+    if (snapshot.exists()) {
+      const data = snapshot.val();
+      const feedbackList = Object.entries(data).sort((a, b) => b[0] - a[0]);
 
-    for (let i = 0; i < listDiscussionLocalStorage.length; i++) {
-        let discussion = listDiscussionLocalStorage[i];
+      feedbackList.forEach(([id, feedback]) => {
+        const div_content = document.createElement("div");
+        div_content.className = "content";
+        div_content.setAttribute("data-id", id);
 
-        // Tạo các phần tử HTML cho bài đăng
-        let discussionDiv = document.createElement("div");
-        discussionDiv.className = "card";
+        // Hiển thị phần nội dung
+        div_content.innerHTML = `
+            <h2 class="feedback-header">${feedback.header}</h2>
+            <h5>${new Date(feedback.createdAt).toLocaleDateString()}</h5>
+            <h5>Author: ${feedback.user}</h5>
+            <div class="img">
+              <img class="feedback-image" src="${
+                feedback.image
+              }" alt="Ảnh" height="200px" width="300px">
+              <p class="feedback-content">${feedback.content}</p>
+            </div>
+            <div class="feedback-buttons"></div>
+          `;
 
-        let discussionHeader = document.createElement("h2");
-        discussionHeader.innerText = discussion.Header;
+        // Chỉ chủ bài viết mới thấy nút "Edit" và "Delete"
+        if (feedback.user === SuccessUser) {
+          const buttonContainer = div_content.querySelector(".feedback-buttons");
 
-        let discussionImageDiv = document.createElement("div");
-        discussionImageDiv.className = "img";
+          const editBtn = document.createElement("button");
+          editBtn.className = "edit_button";
+          editBtn.textContent = "Edit";
+          editBtn.style.marginLeft = "10px";
 
-        let discussionImage = document.createElement("img");
-        discussionImage.src = discussion.Image || "default-image.png"; // Sử dụng ảnh mặc định nếu không có link
-        discussionImage.alt = "Image";
-        discussionImage.width = 300;
-        discussionImage.height = 200;
+          const deleteBtn = document.createElement("button");
+          deleteBtn.className = "delete_button";
+          deleteBtn.textContent = "Delete";
+          deleteBtn.style.marginLeft = "10px";
 
-        let discussionContent = document.createElement("p");
-        discussionContent.innerText = discussion.Content;
+          // Gắn sự kiện sửa
+          editBtn.addEventListener("click", () => {
+            const headerElem = div_content.querySelector(".feedback-header");
+            const imageElem = div_content.querySelector(".feedback-image");
+            const contentElem = div_content.querySelector(".feedback-content");
 
-        // Thêm các phần tử vào bài đăng
-        discussionImageDiv.appendChild(discussionImage);
-        discussionDiv.appendChild(discussionHeader);
-        discussionDiv.appendChild(discussionImageDiv);
-        discussionDiv.appendChild(discussionContent);
+            const newHeader = prompt("Sửa tiêu đề:", headerElem.innerText);
+            const newImage = prompt("Sửa link ảnh:", imageElem.src);
+            const newContent = prompt("Sửa nội dung:", contentElem.innerText);
 
-        // Thêm bài đăng vào container
-        discussionsContainer.appendChild(discussionDiv);
+            if (newHeader && newImage && newContent) {
+              const updates = {
+                header: newHeader,
+                image: newImage,
+                content: newContent,
+                createdAt: feedback.createdAt,
+              };
+
+              update(ref(database, "feedbacks/" + id), updates)
+                .then(() => {
+                  alert("Cập nhật thành công");
+                  loadfeedbacks();
+                })
+                .catch((err) => alert("Lỗi cập nhật: " + err.message));
+            }
+          });
+
+          // Gắn sự kiện xoá
+          deleteBtn.addEventListener("click", () => {
+            const confirmDelete = confirm(
+              "Bạn có chắc chắn muốn xoá bài viết này?"
+            );
+            if (confirmDelete) {
+              remove(ref(database, "feedbacks/" + id))
+                .then(() => {
+                  alert("Đã xoá bài viết");
+                  loadfeedbacks();
+                })
+                .catch((err) => alert("Lỗi xoá: " + err.message));
+            }
+          });
+
+          buttonContainer.appendChild(editBtn);
+          buttonContainer.appendChild(deleteBtn);
+        }
+
+        my_content.appendChild(div_content);
+      });
     }
+  });
 }
 
-Discussions()
+// Gọi lần đầu khi trang vừa load
+loadfeedbacks();
 
-leaveBtn.addEventListener("click", function () {
+leaveBtn.addEventListener("click", () => {
     window.location.href = "/Contact-page/Contact/contact.html"
 })

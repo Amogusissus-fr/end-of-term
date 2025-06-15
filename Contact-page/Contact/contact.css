@@ -5,7 +5,10 @@
 }
 
 body {
-  background-color: #080710;
+  background-image: url(/image/back3.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
   padding-top: 60px;
 }
 
@@ -13,7 +16,7 @@ body {
 .logo_container {
   width: 100%;
   min-height: 20px;
-  background-color: #080710;
+  
   display: flex;
   justify-content: space-evenly;
   color: white;
@@ -24,6 +27,7 @@ body {
 .items {
   display: flex;
   justify-content: center;
+  
 }
 
 main {
@@ -139,14 +143,12 @@ main {
   }
 
 .main * {
-    background-color: white;
     margin-top: 40px;
 }
 
 .main {
     width: 100%;
     min-height: 100px;
-    background-color: white;
     margin-top: 60px;
     display: flex;
     align-items: center;
@@ -165,6 +167,7 @@ b , p, h1, h2, h3, h4 {
     width: 70%;
     margin: 0 auto;
     padding: 20px;
+
 }
 
 .info1, .info2 {
@@ -172,6 +175,7 @@ b , p, h1, h2, h3, h4 {
     min-height: 200px;
     margin-bottom: 20px; 
     padding: 20px;
+    background-color: white;
     /* border: 2px solid #000;*/
 }
 
@@ -196,7 +200,6 @@ b , p, h1, h2, h3, h4 {
     height: 50vh;
     width: 100%;
     display: flex;
-    background-image: linear-gradient(135deg, #74ebd5, #ACB6E5);
   }
   
   .links {  width: 50%;
@@ -283,34 +286,12 @@ b , p, h1, h2, h3, h4 {
     background: linear-gradient(45deg, #ff416c, #ff4b2b);
   }
 
-.form {
-  background: rgba(255, 255, 255, 0.1);
-  padding: 20px;
-  border-radius: 10px;
-  backdrop-filter: blur(10px);
-  text-align: center;
-  margin: 20px auto;
-  max-width: 500px;
-  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
-}
-
-.form input {
-  width: 90%;
-  padding: 10px;
-  margin: 10px 0;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
-}
 
 .card_add input::placeholder {
   color: #ccc;
 }
 
 .info {
-  background: linear-gradient(135deg, #1e1e2e, #25263b);
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
