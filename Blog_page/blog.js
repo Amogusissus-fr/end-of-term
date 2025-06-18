@@ -18,7 +18,7 @@ const firebaseConfig = {
   storageBucket: "jsi41-bea38.appspot.com",
   messagingSenderId: "451958885494",
   appId: "1:451958885494:web:e269c962c1a650f0576357",
-  measurementId: "G-6E82941PVL"
+  measurementId: "G-6E82941PVL",
 };
 
 // Khởi tạo Firebase
@@ -32,14 +32,19 @@ let inputContent = document.getElementById("inputContent");
 let submit_button = document.getElementById("submitPostBtn");
 let my_content = document.querySelector(".my_content");
 let SuccessUser = localStorage.getItem("SuccessUserLogin");
+
 console.log("SuccessUser:", SuccessUser);
 
 // Thêm bài viết
 submit_button.addEventListener("click", function () {
-  if (inputHeader.value === "" || inputImage.value === "" || inputContent.value === "") {
+  if (
+    inputHeader.value === "" ||
+    inputImage.value === "" ||
+    inputContent.value === ""
+  ) {
     alert("Vui lòng điền đầy đủ thông tin!");
   } else {
-    const postId = Date.now(); // dùng timestamp làm id
+    const postId = Date.now();
     const postData = {
       header: inputHeader.value,
       image: inputImage.value,
@@ -55,7 +60,7 @@ submit_button.addEventListener("click", function () {
         inputHeader.value = "";
         inputImage.value = "";
         inputContent.value = "";
-        loadPosts(); // tải lại sau khi đăng
+        loadPosts();
       })
       .catch((err) => {
         alert("Lỗi khi lưu bài viết: " + err.message);
@@ -63,12 +68,13 @@ submit_button.addEventListener("click", function () {
   }
 });
 
-// Hàm tải bài viết (dùng get)
+// Hàm tải bài viết
 function loadPosts() {
   const postsRef = ref(database, "posts/");
   get(postsRef)
     .then((snapshot) => {
       my_content.innerHTML = "";
+
       if (snapshot.exists()) {
         const data = snapshot.val();
         const postList = Object.entries(data).sort((a, b) => b[0] - a[0]);
@@ -78,19 +84,69 @@ function loadPosts() {
           div_content.className = "content";
           div_content.setAttribute("data-id", id);
 
-          // Hiển thị phần nội dung
           div_content.innerHTML = `
             <h2 class="post-header">${post.header}</h2>
             <h5>${new Date(post.createdAt).toLocaleDateString()}</h5>
             <h5>Author: ${post.user}</h5>
             <div class="img">
-              <img class="post-image" src="${post.image}" alt="Ảnh" height="200px" width="300px">
+              <img class="post-image" src="${
+                post.image
+              }" alt="Ảnh" height="200px" width="300px">
               <p class="post-content">${post.content}</p>
             </div>
             <div class="post-buttons"></div>
+            <input type="text" id="inputReply" placeholder="Reply ...">
+            <button id="submitReplyBtn">Reply</button>
           `;
 
-          // Chỉ chủ bài viết mới thấy nút "Edit" và "Delete"
+          // Tạo nút và input trả lời
+          let inputReply = div_content.querySelector("#inputReply");
+          let submitReplyBtn = div_content.querySelector("#submitReplyBtn");
+
+          // GẮN SỰ KIỆN CLICK TRƯỚC (luôn luôn gắn)
+          submitReplyBtn.addEventListener("click", () => {
+            const replyId = Date.now();
+            const replyData = {
+              content: inputReply.value,
+              createdAt: new Date().toISOString(),
+              user: SuccessUser,
+            };
+
+            const repliesRef = ref(database, `posts/${id}/replies/${replyId}`);
+            set(repliesRef, replyData)
+              .then(() => {
+                loadPosts(); // Tải lại để hiển thị reply mới
+              })
+              .catch((err) => {
+                alert("Lỗi khi lưu reply: " + err.message);
+              });
+          });
+
+          // SAU ĐÓ mới load các reply cũ (nếu có)
+          const repliesRef = ref(database, `posts/${id}/replies`);
+          get(repliesRef).then((snapshot) => {
+            if (snapshot.exists()) {
+              const replies = snapshot.val();
+              const replyList = Object.values(replies);
+
+              replyList.sort(
+                (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
+              );
+              replyList.forEach((reply) => {
+                const replyContainer = document.createElement("div");
+                replyContainer.innerHTML = `
+          <div style="margin-left: 100px; margin-top: 20px">
+            <h5>${new Date(reply.createdAt).toLocaleDateString()}</h5>
+            <h5>Author: ${reply.user}</h5>
+            <p class="post-content">${reply.content}</p>
+          </div>
+        `;
+                div_content.appendChild(replyContainer);
+              });
+            }
+          });
+
+          // Chỉ chủ bài viết mới thấy nút Edit / Delete
           if (post.user === SuccessUser) {
             const buttonContainer = div_content.querySelector(".post-buttons");
 
@@ -104,7 +160,6 @@ function loadPosts() {
             deleteBtn.textContent = "Delete";
             deleteBtn.style.marginLeft = "10px";
 
-            // Gắn sự kiện sửa
             editBtn.addEventListener("click", () => {
               const headerElem = div_content.querySelector(".post-header");
               const imageElem = div_content.querySelector(".post-image");
@@ -119,7 +174,7 @@ function loadPosts() {
                   header: newHeader,
                   image: newImage,
                   content: newContent,
-                  createdAt: post.createdAt
+                  createdAt: post.createdAt,
                 };
 
                 update(ref(database, "posts/" + id), updates)
@@ -131,9 +186,10 @@ function loadPosts() {
               }
             });
 
-            // Gắn sự kiện xoá
             deleteBtn.addEventListener("click", () => {
-              const confirmDelete = confirm("Bạn có chắc chắn muốn xoá bài viết này?");
+              const confirmDelete = confirm(
+                "Bạn có chắc chắn muốn xoá bài viết này?"
+              );
               if (confirmDelete) {
                 remove(ref(database, "posts/" + id))
                   .then(() => {
