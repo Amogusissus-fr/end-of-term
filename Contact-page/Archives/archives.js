@@ -9,7 +9,7 @@ import {
   get,
 } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-database.js";
 
-// Firebase cấu hình
+// Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyDnw_29_QGU6wmYNorqtOEupHjjCdur70k",
   authDomain: "jsi41-bea38.firebaseapp.com",
@@ -21,150 +21,195 @@ const firebaseConfig = {
   measurementId: "G-6E82941PVL",
 };
 
-// Khởi tạo Firebase
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
-// Lấy phần tử HTML
+// DOM
 let inputHeader = document.getElementById("inputHeader");
 let inputImage = document.getElementById("inputImage");
 let inputContent = document.getElementById("inputContent");
-let submit_button = document.getElementById("submitBtn");
+let submit_button = document.getElementById("submitPostBtn");
 let my_content = document.querySelector(".my_content");
+let leaveBtn = document.getElementById("leaveBtn");
 let SuccessUser = localStorage.getItem("SuccessUserLogin");
-console.log("SuccessUser:", SuccessUser);
-let leaveBtn = document.getElementById("leaveBtn")
 
-// Thêm bài viết
+// Submit feedback
 submit_button.addEventListener("click", function () {
-  if (
-    inputHeader.value === "" ||
-    inputImage.value === "" ||
-    inputContent.value === ""
-  ) {
+  if (!inputHeader.value || !inputImage.value || !inputContent.value) {
     alert("Vui lòng điền đầy đủ thông tin!");
-  } else {
-    const feedbackId = Date.now(); // dùng timestamp làm id
-    const feedbackData = {
-      header: inputHeader.value,
-      image: inputImage.value,
-      content: inputContent.value,
-      createdAt: new Date().toISOString(),
-      user: SuccessUser,
-    };
-
-    const feedbackRef = ref(database, "feedbacks/" + feedbackId);
-    set(feedbackRef, feedbackData)
-      .then(() => {
-        alert("Đăng bài thành công!");
-        inputHeader.value = "";
-        inputImage.value = "";
-        inputContent.value = "";
-        loadfeedbacks(); // tải lại sau khi đăng
-      })
-      .catch((err) => {
-        alert("Lỗi khi lưu bài viết: " + err.message);
-      });
+    return;
   }
+
+  const feedbackId = Date.now();
+  const feedbackData = {
+    header: inputHeader.value,
+    image: inputImage.value,
+    content: inputContent.value,
+    createdAt: new Date().toISOString(),
+    user: SuccessUser,
+  };
+
+  set(ref(database, "feedbacks/" + feedbackId), feedbackData)
+    .then(() => {
+      alert("Gửi feedback thành công!");
+      inputHeader.value = "";
+      inputImage.value = "";
+      inputContent.value = "";
+      loadFeedbacks();
+    })
+    .catch((err) => {
+      alert("Lỗi khi lưu bài viết: " + err.message);
+    });
 });
 
-// Hàm tải bài viết (dùng get)
-function loadfeedbacks() {
-  const feedbacksRef = ref(database, "feedbacks/");
-  get(feedbacksRef).then((snapshot) => {
-    my_content.innerHTML = "";
-    if (snapshot.exists()) {
-      const data = snapshot.val();
-      const feedbackList = Object.entries(data).sort((a, b) => b[0] - a[0]);
+// Load feedbacks
+function loadFeedbacks() {
+  get(ref(database, "feedbacks/"))
+    .then((snapshot) => {
+      my_content.innerHTML = "";
 
-      feedbackList.forEach(([id, feedback]) => {
-        const div_content = document.createElement("div");
-        div_content.className = "content";
-        div_content.setAttribute("data-id", id);
+      if (snapshot.exists()) {
+        const data = snapshot.val();
+        const feedbackList = Object.entries(data).sort((a, b) => b[0] - a[0]);
 
-        // Hiển thị phần nội dung
-        div_content.innerHTML = `
-            <h2 class="feedback-header">${feedback.header}</h2>
-            <h5>${new Date(feedback.createdAt).toLocaleDateString()}</h5>
-            <h5>Author: ${feedback.user}</h5>
+        feedbackList.forEach(([id, post]) => {
+          const div_content = document.createElement("div");
+          div_content.className = "card";
+          div_content.setAttribute("data-id", id);
+
+          div_content.innerHTML = `
+            <h2 class="post-header">${post.header}</h2>
+            <h5>${new Date(post.createdAt).toLocaleDateString()}</h5>
             <div class="img">
-              <img class="feedback-image" src="${
-                feedback.image
-              }" alt="Ảnh" height="200px" width="300px">
-              <p class="feedback-content">${feedback.content}</p>
+              <img class="post-image" src="${post.image}" height="200" width="300" alt="ảnh"/>
+              <p class="post-content">${post.content}</p>
             </div>
-            <div class="feedback-buttons"></div>
+            <h5>Author: ${post.user}</h5>
+            <div class="post-buttons"></div>
+            <input type="text" id="inputReply" placeholder="Reply ...">
+            <button id="submitReplyBtn">Reply</button>
           `;
 
-        // Chỉ chủ bài viết mới thấy nút "Edit" và "Delete"
-        if (feedback.user === SuccessUser) {
-          const buttonContainer = div_content.querySelector(".feedback-buttons");
+          const inputReply = div_content.querySelector("#inputReply");
+          const submitReplyBtn = div_content.querySelector("#submitReplyBtn");
 
-          const editBtn = document.createElement("button");
-          editBtn.className = "edit_button";
-          editBtn.textContent = "Edit";
-          editBtn.style.marginLeft = "10px";
+          // Reply display wrapper
+          const repliesWrapper = document.createElement("div");
+          repliesWrapper.className = "replies-wrapper";
+          repliesWrapper.style.display = "none";
+          div_content.appendChild(repliesWrapper);
 
-          const deleteBtn = document.createElement("button");
-          deleteBtn.className = "delete_button";
-          deleteBtn.textContent = "Delete";
-          deleteBtn.style.marginLeft = "10px";
+          // Show/Hide buttons
+          const showBtn = document.createElement("button");
+          showBtn.textContent = "Show Replies";
+          const hideBtn = document.createElement("button");
+          hideBtn.textContent = "Hide Replies";
 
-          // Gắn sự kiện sửa
-          editBtn.addEventListener("click", () => {
-            const headerElem = div_content.querySelector(".feedback-header");
-            const imageElem = div_content.querySelector(".feedback-image");
-            const contentElem = div_content.querySelector(".feedback-content");
+          div_content.appendChild(showBtn);
+          div_content.appendChild(hideBtn);
 
-            const newHeader = prompt("Sửa tiêu đề:", headerElem.innerText);
-            const newImage = prompt("Sửa link ảnh:", imageElem.src);
-            const newContent = prompt("Sửa nội dung:", contentElem.innerText);
+          showBtn.addEventListener("click", () => {
+            repliesWrapper.style.display = "block";
+          });
 
-            if (newHeader && newImage && newContent) {
-              const updates = {
-                header: newHeader,
-                image: newImage,
-                content: newContent,
-                createdAt: feedback.createdAt,
-              };
+          hideBtn.addEventListener("click", () => {
+            repliesWrapper.style.display = "none";
+          });
 
-              update(ref(database, "feedbacks/" + id), updates)
-                .then(() => {
-                  alert("Cập nhật thành công");
-                  loadfeedbacks();
-                })
-                .catch((err) => alert("Lỗi cập nhật: " + err.message));
+          // Gửi phản hồi mới
+          submitReplyBtn.addEventListener("click", () => {
+            const replyId = Date.now();
+            const replyData = {
+              content: inputReply.value,
+              createdAt: new Date().toISOString(),
+              user: SuccessUser,
+            };
+
+            const repliesRef = ref(database, `feedbacks/${id}/replies/${replyId}`);
+            set(repliesRef, replyData)
+              .then(() => loadFeedbacks())
+              .catch((err) => alert("Lỗi khi lưu reply: " + err.message));
+          });
+
+          // Tải các phản hồi cũ
+          const repliesRef = ref(database, `feedbacks/${id}/replies`);
+          get(repliesRef).then((snapshot) => {
+            if (snapshot.exists()) {
+              const replies = Object.values(snapshot.val());
+              replies.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+
+              replies.forEach((reply) => {
+                const replyBox = document.createElement("div");
+                replyBox.className = "reply-box";
+                replyBox.innerHTML = `
+                  <h5>${new Date(reply.createdAt).toLocaleDateString()}</h5>
+                  <h5>Author: ${reply.user}</h5>
+                  <p>${reply.content}</p>
+                `;
+                repliesWrapper.appendChild(replyBox);
+              });
             }
           });
 
-          // Gắn sự kiện xoá
-          deleteBtn.addEventListener("click", () => {
-            const confirmDelete = confirm(
-              "Bạn có chắc chắn muốn xoá bài viết này?"
-            );
-            if (confirmDelete) {
-              remove(ref(database, "feedbacks/" + id))
-                .then(() => {
-                  alert("Đã xoá bài viết");
-                  loadfeedbacks();
-                })
-                .catch((err) => alert("Lỗi xoá: " + err.message));
-            }
-          });
+          // Quyền sửa/xoá nếu là người đăng
+          if (post.user === SuccessUser) {
+            const buttonContainer = div_content.querySelector(".post-buttons");
 
-          buttonContainer.appendChild(editBtn);
-          buttonContainer.appendChild(deleteBtn);
-        }
+            const editBtn = document.createElement("button");
+            editBtn.textContent = "Edit";
 
-        my_content.appendChild(div_content);
-      });
-    }
-  });
+            const deleteBtn = document.createElement("button");
+            deleteBtn.textContent = "Delete";
+
+            editBtn.addEventListener("click", () => {
+              const newHeader = prompt("Sửa tiêu đề:", post.header);
+              const newImage = prompt("Sửa link ảnh:", post.image);
+              const newContent = prompt("Sửa nội dung:", post.content);
+
+              if (newHeader && newImage && newContent) {
+                const updates = {
+                  header: newHeader,
+                  image: newImage,
+                  content: newContent,
+                  createdAt: post.createdAt,
+                };
+
+                update(ref(database, "feedbacks/" + id), updates)
+                  .then(() => {
+                    alert("Cập nhật thành công!");
+                    loadFeedbacks();
+                  })
+                  .catch((err) => alert("Lỗi cập nhật: " + err.message));
+              }
+            });
+
+            deleteBtn.addEventListener("click", () => {
+              const confirmDelete = confirm("Bạn có chắc chắn muốn xoá bài viết này?");
+              if (confirmDelete) {
+                remove(ref(database, "feedbacks/" + id))
+                  .then(() => {
+                    alert("Đã xoá bài viết");
+                    loadFeedbacks();
+                  })
+                  .catch((err) => alert("Lỗi xoá: " + err.message));
+              }
+            });
+
+            buttonContainer.appendChild(editBtn);
+            buttonContainer.appendChild(deleteBtn);
+          }
+
+          my_content.appendChild(div_content);
+        });
+      }
+    })
+    .catch((err) => console.error("Lỗi khi tải feedbacks:", err));
 }
 
-// Gọi lần đầu khi trang vừa load
-loadfeedbacks();
+// Gọi khi trang load
+loadFeedbacks();
 
+// Nút rời khỏi trang
 leaveBtn.addEventListener("click", () => {
-    window.location.href = "/Contact-page/Contact/contact.html"
-})
+  window.location.href = "/Contact-page/Contact/contact.html";
+});

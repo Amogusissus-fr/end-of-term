@@ -81,29 +81,51 @@ function loadPosts() {
 
         postList.forEach(([id, post]) => {
           const div_content = document.createElement("div");
-          div_content.className = "content";
+          div_content.className = "card";
           div_content.setAttribute("data-id", id);
 
           div_content.innerHTML = `
             <h2 class="post-header">${post.header}</h2>
             <h5>${new Date(post.createdAt).toLocaleDateString()}</h5>
-            <h5>Author: ${post.user}</h5>
             <div class="img">
               <img class="post-image" src="${
                 post.image
               }" alt="Ảnh" height="200px" width="300px">
               <p class="post-content">${post.content}</p>
             </div>
+            <h5>Author: ${post.user}</h5>
             <div class="post-buttons"></div>
             <input type="text" id="inputReply" placeholder="Reply ...">
             <button id="submitReplyBtn">Reply</button>
           `;
 
-          // Tạo nút và input trả lời
-          let inputReply = div_content.querySelector("#inputReply");
-          let submitReplyBtn = div_content.querySelector("#submitReplyBtn");
+          const inputReply = div_content.querySelector("#inputReply");
+          const submitReplyBtn = div_content.querySelector("#submitReplyBtn");
 
-          // GẮN SỰ KIỆN CLICK TRƯỚC (luôn luôn gắn)
+          const repliesWrapper = document.createElement("div");
+          repliesWrapper.className = "replies-wrapper";
+          repliesWrapper.style.display = "none"; // Ẩn mặc định
+          div_content.appendChild(repliesWrapper);
+
+          const showBtn = document.createElement("button");
+          showBtn.textContent = "Show Replies";
+          showBtn.style.marginRight = "5px";
+
+          const hideBtn = document.createElement("button");
+          hideBtn.textContent = "Hide Replies";
+          hideBtn.style.marginRight = "5px";
+
+          div_content.appendChild(showBtn);
+          div_content.appendChild(hideBtn);
+
+          showBtn.addEventListener("click", () => {
+            repliesWrapper.style.display = "block";
+          });
+
+          hideBtn.addEventListener("click", () => {
+            repliesWrapper.style.display = "none";
+          });
+
           submitReplyBtn.addEventListener("click", () => {
             const replyId = Date.now();
             const replyData = {
@@ -115,14 +137,14 @@ function loadPosts() {
             const repliesRef = ref(database, `posts/${id}/replies/${replyId}`);
             set(repliesRef, replyData)
               .then(() => {
-                loadPosts(); // Tải lại để hiển thị reply mới
+                loadPosts(); // reload lại sau khi thêm
               })
               .catch((err) => {
                 alert("Lỗi khi lưu reply: " + err.message);
               });
           });
 
-          // SAU ĐÓ mới load các reply cũ (nếu có)
+          // Load replies cũ
           const repliesRef = ref(database, `posts/${id}/replies`);
           get(repliesRef).then((snapshot) => {
             if (snapshot.exists()) {
@@ -134,19 +156,18 @@ function loadPosts() {
               );
               replyList.forEach((reply) => {
                 const replyContainer = document.createElement("div");
+                replyContainer.className = "reply-box";
                 replyContainer.innerHTML = `
-          <div style="margin-left: 100px; margin-top: 20px">
-            <h5>${new Date(reply.createdAt).toLocaleDateString()}</h5>
-            <h5>Author: ${reply.user}</h5>
-            <p class="post-content">${reply.content}</p>
-          </div>
-        `;
-                div_content.appendChild(replyContainer);
+                  <h5>${new Date(reply.createdAt).toLocaleDateString()}</h5>
+                  <h5>Author: ${reply.user}</h5>
+                  <p>${reply.content}</p>
+                `;
+                repliesWrapper.appendChild(replyContainer);
               });
             }
           });
 
-          // Chỉ chủ bài viết mới thấy nút Edit / Delete
+          // Chỉ người tạo mới được sửa / xoá
           if (post.user === SuccessUser) {
             const buttonContainer = div_content.querySelector(".post-buttons");
 
@@ -160,6 +181,7 @@ function loadPosts() {
             deleteBtn.textContent = "Delete";
             deleteBtn.style.marginLeft = "10px";
 
+            // Sửa bài viết
             editBtn.addEventListener("click", () => {
               const headerElem = div_content.querySelector(".post-header");
               const imageElem = div_content.querySelector(".post-image");
@@ -186,6 +208,7 @@ function loadPosts() {
               }
             });
 
+            // Xoá bài viết
             deleteBtn.addEventListener("click", () => {
               const confirmDelete = confirm(
                 "Bạn có chắc chắn muốn xoá bài viết này?"
