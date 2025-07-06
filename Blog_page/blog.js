@@ -80,6 +80,10 @@ function loadPosts() {
         const postList = Object.entries(data).sort((a, b) => b[0] - a[0]);
 
         postList.forEach(([id, post]) => {
+          console.log(id);
+          console.log(post);
+          
+          
           const div_content = document.createElement("div");
           div_content.className = "card";
           div_content.setAttribute("data-id", id);
@@ -104,7 +108,7 @@ function loadPosts() {
 
           const repliesWrapper = document.createElement("div");
           repliesWrapper.className = "replies-wrapper";
-          repliesWrapper.style.display = "none"; // Ẩn mặc định
+          repliesWrapper.style.display = "none";
           div_content.appendChild(repliesWrapper);
 
           const showBtn = document.createElement("button");
